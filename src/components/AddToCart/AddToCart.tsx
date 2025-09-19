@@ -10,6 +10,7 @@ import { WishlistContext } from "../Context/WishlistContext/WishlistContext";
 import { removewishlistItemAction } from "./_action/RemoveWishlistItemAction";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { ProductI } from "@/interface";
 
 export default function AddToCart({ productId }: { productId: string }) {
   const [isLoadingCart] = useState(false);
@@ -22,10 +23,10 @@ export default function AddToCart({ productId }: { productId: string }) {
   const route=useRouter();
 
   const isInWishlist = wishlistData?.data?.some(
-    (item: any) => item._id === productId
+    (item: ProductI) => item._id === productId
   );
 
-  async function addToCart(productId: string) {
+async function addToCart(productId: string) {
     if(session.status=='authenticated'){
             try {
         const response = await fetch("http://localhost:3000/api/add-to-cart", {

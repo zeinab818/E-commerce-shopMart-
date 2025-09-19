@@ -47,7 +47,7 @@ export default function ProductDetails({ params }: { params: { productId: string
 
       const { data }: { data: ProductI } = await response.json();
       setProduct(data);
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || "Something went wrong 😢");
       setProduct(null);
     } finally {

@@ -47,7 +47,7 @@ export default function BrandDetails({ params }: { params: { brandId: string } }
       if (!productsRes.ok) throw new Error("Failed to fetch products");
       const { data: productsData }: { data: ProductI[] } = await productsRes.json();
       setProducts(productsData);
-    } catch (err: any) {
+    } catch (err) {
       setError(err.message || "Something went wrong 😢");
       setBrand(null);
       setProducts(null);
