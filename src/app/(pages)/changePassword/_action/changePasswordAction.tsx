@@ -15,7 +15,7 @@ export async function changePasswordAction(changePassword: {
       {
         method: "PUT",
         headers: {
-          token: token,
+          token: token+'',
           "Content-Type": "application/json",
         },
         body: JSON.stringify(changePassword),

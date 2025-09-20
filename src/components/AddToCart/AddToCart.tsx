@@ -26,10 +26,10 @@ export default function AddToCart({ productId }: { productId: string }) {
     (item: ProductI) => item._id === productId
   );
 
-async function addToCart(productId: string) {
+  async function addToCart(productId: string) {
     if(session.status=='authenticated'){
             try {
-        const response = await fetch("http://localhost:3000/api/add-to-cart", {
+        const response = await fetch("/api/add-to-cart", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ productId }),
@@ -52,28 +52,30 @@ async function addToCart(productId: string) {
     else{
       route.push('/login')
     }
-
 }
   async function addToWishlist(productId: string) {
  
       if(session.status=='authenticated'){
         try{
-              const response = await fetch("http://localhost:3000/api/add-to-wishlist", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ productId }),
+              const response = await fetch("/api/add-to-wishlist", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ productId }),
   
     });
     const data = await response.json();
     if (data.status === "success") {
       toast.success("Added to wishlist ❤️");
-      setWishlistData(data);
+      await getWishlist();
     } else {
       toast.error(data.message || "Something went wrong");
     }
         }  catch (err) {
         console.error(err);
         toast.error("Failed to add to whishlist");
+      }
+      finally{
+        setIsLoadingWishlist(false)
       }
     }
     else{

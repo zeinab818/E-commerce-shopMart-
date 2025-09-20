@@ -14,7 +14,7 @@ export async function updateDataAction(UpdateAccount: {
       {
         method: "PUT",
         headers: {
-          token:token,
+          token:token+'',
           "Content-Type": "application/json",
         },
         body: JSON.stringify(UpdateAccount),

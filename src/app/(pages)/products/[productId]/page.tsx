@@ -33,27 +33,34 @@ export default function ProductDetails({ params }: { params: { productId: string
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function fetchProductDetails() {
-    try {
-      setLoading(true);
-      setError(null);
+ 
 
-      const response = await fetch(
-        `http://localhost:3000/api/get-productID?productId=${productId}`,
-        { cache: "no-store" }
-      );
+async function fetchProductDetails() {
+  try {
+    setLoading(true);
+    setError(null);
 
-      if (!response.ok) throw new Error("Failed to fetch product details");
+    const response = await fetch(
+      `/api/get-productID?productId=${productId}`,
+      { cache: "no-store" }
+    );
 
-      const { data }: { data: ProductI } = await response.json();
-      setProduct(data);
-    } catch (err) {
-      setError(err.message || "Something went wrong 😢");
-      setProduct(null);
-    } finally {
-      setLoading(false);
+    if (!response.ok) throw new Error("Failed to fetch product details");
+
+    const { data }: { data: ProductI } = await response.json();
+    setProduct(data);
+
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      setError(err.message);
+    } else {
+      setError("Something went wrong 😢");
     }
+  } finally {
+    setLoading(false); // <<< هنا 👈
   }
+}
+
 
   useEffect(() => {
     fetchProductDetails();

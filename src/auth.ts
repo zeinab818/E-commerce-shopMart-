@@ -1,4 +1,4 @@
-import { FaildLoginResponse, SuccessLoginResponse } from "@/interface"
+import { FaildLoginResponse, SuccessLoginResponse, UserResponse } from "@/interface"
 import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 
@@ -47,7 +47,8 @@ export const authOptions:AuthOptions={
             return token;
         },
         session:({session,token})=>{
-            session.user=token.user  
+            session.user=token.user  as UserResponse;
+            session.token = token.token as string;
             return session;
         },
 

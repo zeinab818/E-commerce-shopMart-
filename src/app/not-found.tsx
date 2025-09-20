@@ -9,7 +9,7 @@ export default function NotFound() {
       
       {/* Logo with a subtle animation */}
       <div className="animate-bounce">
-        <Logo className="w-32 h-32 text-purple-600" />
+        <Logo  />
       </div>
 
       {/* Main message */}

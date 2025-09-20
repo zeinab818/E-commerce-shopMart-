@@ -27,6 +27,7 @@ export default function CategoryDetails({
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+
   async function fetchCategoryAndProducts() {
     try {
       setLoading(true);
@@ -50,6 +51,7 @@ export default function CategoryDetails({
 
       setCategory(categoryData);
       setProducts(productsData);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Failed to load category or products 😢");
       setCategory(null);

@@ -6,14 +6,14 @@ export async function getYourAddressAction(id: string) {
   try {
     const token = await getUserToken();
 
+
     const response = await fetch(
       `https://ecommerce.routemisr.com/api/v1/addresses/${id}`,
       {
         method: "GET",
-        headers: {
-          token: token,
-          "Content-Type": "application/json",
-        },
+        headers:{
+          token:token+''
+        }
       }
     );
 

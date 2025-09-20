@@ -28,6 +28,9 @@ import { removeAddressAction } from "./_action/removeAddressAction";
 import { getYourAddressAction } from "./_action/getyourAddressAction";
 import { colors } from "@/Helpers/colors";
 
+// ✅ استيراد الـ interface الصحيح
+import { AddressData } from "@/interface/address";
+
 interface Address {
   _id: string;
   name: string;
@@ -69,10 +72,10 @@ export default function Profile() {
     } else if (session.status === "unauthenticated") {
       route.push("/login");
     }
-  }, [session.status]);
+  }, [route, session.status]);
 
   async function addAddress() {
-    const newAddress = {
+    const newAddress: AddressData = {
       name: nameInput.current?.value || "",
       details: detailsInput.current?.value || "",
       phone: phoneInput.current?.value || "",
@@ -90,10 +93,10 @@ export default function Profile() {
       toast.success("Address added ✅");
       fetchAddresses();
 
-      if (nameInput.current) nameInput.current.value = "";
-      if (detailsInput.current) detailsInput.current.value = "";
-      if (phoneInput.current) phoneInput.current.value = "";
-      if (cityInput.current) cityInput.current.value = "";
+      nameInput.current!.value = "";
+      detailsInput.current!.value = "";
+      phoneInput.current!.value = "";
+      cityInput.current!.value = "";
     } else {
       toast.error(data?.message || "Failed to add address");
     }
@@ -120,7 +123,7 @@ export default function Profile() {
   }
 
   return (
-    <div style={{background:colors.secondary ,color:colors.accentForeground}} className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto p-6">
+    <div style={{background: colors.secondary, color: colors.accentForeground}} className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto p-6">
       {/* Add Address Form */}
       <Card className="shadow-lg border-purple-200">
         <CardHeader>
@@ -131,11 +134,10 @@ export default function Profile() {
         <CardContent className="space-y-3">
           <Label>Name</Label>
           <Input ref={nameInput} placeholder="Home, Office..." />
-           <Label>Phone</Label>
+          <Label>Phone</Label>
           <Input ref={phoneInput} placeholder="0101xxxxxxx" />
           <Label>Details</Label>
           <Input ref={detailsInput} placeholder="Street, Building..." />
-         
           <Label>City</Label>
           <Input ref={cityInput} placeholder="Cairo, Giza..." />
           <Button onClick={addAddress} className="w-full bg-purple-600 hover:bg-pink-500">
@@ -144,31 +146,29 @@ export default function Profile() {
         </CardContent>
       </Card>
 
-      {/* Addresses */}
-      <div className="space-y-4" style={{background:colors.secondary,color:colors.accentForeground}}>
+      {/* Addresses List */}
+      <div className="space-y-4" style={{background: colors.secondary, color: colors.accentForeground}}>
         <h2 className="text-xl font-bold text-purple-700">My Addresses</h2>
         {loading ? (
           <p className="text-gray-500">Loading...</p>
         ) : addresses.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2" style={{background:colors.secondary,color:colors.accentForeground}}>
+          <div className="grid gap-4 sm:grid-cols-2">
             {addresses.map((addr) => (
               <motion.div
                 key={addr._id}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                style={{background:colors.secondary,color:colors.accentForeground}}
                 className="p-4 rounded-xl border border-purple-200 shadow-md bg-gradient-to-br from-pink-50 to-purple-50"
               >
-                <p style={{color:colors.accentForeground}} className="font-semibold flex items-center gap-2 text-purple-700">
+                <p className="font-semibold flex items-center gap-2 text-purple-700">
                   <Home className="w-4 h-4" /> {addr.name}
                 </p>
-                <p style={{color:colors.accentForeground}}  className="text-gray-600 flex items-center gap-2">
+                <p className="text-gray-600 flex items-center gap-2">
                   <Phone className="w-4 h-4" /> {addr.phone}
                 </p>
-                <p  style={{color:colors.accentForeground}}  className="text-gray-700 flex items-center gap-2">
+                <p className="text-gray-700 flex items-center gap-2">
                   <MapPin className="w-4 h-4" /> {addr.details}, {addr.city}
                 </p>
-              
                 <div className="flex gap-2 mt-3">
                   <Button onClick={() => getYourAddress(addr._id)} className="bg-blue-100 hover:bg-blue-200 text-gray-800">
                     View

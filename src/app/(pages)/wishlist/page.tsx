@@ -23,45 +23,42 @@ export default function Wishlist() {
     router.push("/");
   }
 
-
-  async function getWishlist() {
-    if(session.status=='authenticated'){
-        try {
-      const response = await fetch("http://localhost:3000/api/get-wishlist", {
-        
-      });
+async function getWishlist() {
+  if (session.status === "authenticated") {
+    try {
+      const response = await fetch("http://localhost:3000/api/get-wishlist");
       const data: WishlistResponse = await response.json();
       setWishlistData(data);
     } catch (err) {
       console.error("Failed to fetch wishlist", err);
     }
-    }
-    else{
-      router.push('/login')
-    }
-  
+  } else {
+    router.push("/login");
   }
+}
 
-  // 🟣 remove from wishlist
-  async function removeFromWishlist(productId: string) {
-    if(session.status=='authenticated'){
-      try {
+async function removeFromWishlist(productId: string) {
+  if (session.status === "authenticated") {
+    try {
       await fetch(`http://localhost:3000/wishlist/${productId}`, {
+        method: "DELETE", // تأكدي من استخدام Method صحيحة
       });
 
-      // Update local state
-      setWishlistData((prev: WishlistResponse) => ({
-        ...prev,
-        data: prev.data.filter((item) => item._id !== productId),
-      }));
+      // تحديث الـ state بدون استخدام الدالة لتجنب مشكلة TypeScript
+      if (wishlistData) {
+        const newWishlistData: WishlistResponse = {
+          ...wishlistData,
+          data: wishlistData.data.filter((item) => item._id !== productId),
+        };
+        setWishlistData(newWishlistData);
+      }
     } catch (err) {
       console.error("Failed to remove product", err);
     }
-    }
-    else{
-      router.push('/login')
-    }
+  } else {
+    router.push("/login");
   }
+}
 
 
     useEffect(() => {

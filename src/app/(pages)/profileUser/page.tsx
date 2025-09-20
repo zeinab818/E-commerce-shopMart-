@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
@@ -47,7 +47,7 @@ export default function ProfilePage() {
         {/* Profile Content */}
         <CardContent className="relative -mt-16 flex flex-col items-center text-center">
           <Image
-            src={session.user?.image || userImage}
+            src={userImage}
             alt="Profile"
             width={128}
             height={128}

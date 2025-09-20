@@ -48,6 +48,7 @@ export default function AllOrders() {
 
 
   // ----- Fetch Orders -----
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   async function getUserOrders(userId: string) {
     if (session.status === "authenticated") {
       try {
@@ -125,7 +126,7 @@ export default function AllOrders() {
 
       {/* ----- Error State ----- */}
       {error && (
-        <div className="flex flex-col items-center justify-center mt-8 space-y-4">
+        <div style={{background:colors.secondary , color:colors.accentForeground}} className="flex flex-col items-center justify-center mt-8 space-y-4">
           <WifiOff className="w-12 h-12 text-gray-500" />
           <p className="text-red-600 font-bold text-xl">{error}</p>
           <Button
@@ -144,7 +145,7 @@ export default function AllOrders() {
       )}
 
       {!isLoading && !error && sortedOrders.length > 0 && (
-        <div className="space-y-8 mt-4">
+        <div className="space-y-8 mt-4" style={{background:colors.secondary , color:colors.accentForeground}}>
           {sortedOrders.map((order) => (
             <div key={order.id} className="border p-4 rounded-xl shadow-md bg-white">
               <h2 className="font-semibold text-lg mb-2">Order ID: {order.id}</h2>
@@ -158,9 +159,9 @@ export default function AllOrders() {
                 <b>Payment:</b> {order.paymentMethodType}
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div style={{background:colors.secondary , color:colors.accentForeground}} className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {order.cartItems.map((item) => (
-                  <Link key={item.id} href={`/products/${item.product._id}`}>
+                  <Link key={item.id} href={`/products/${item.product._id}`} passHref>
                     <div className="border rounded-lg p-3 shadow-sm hover:shadow-md transition cursor-pointer">
                       <img
                         src={item.product.imageCover}

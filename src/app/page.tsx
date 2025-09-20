@@ -9,13 +9,15 @@ import Img1 from '@/assets/1.webp';
 import Img2 from '@/assets/Ecommerce web page-pana.png';
 import Img3 from '@/assets/Online shopping-pana.png';
 import Img4 from '@/assets/Retail markdown-pana.png';
-import { colors } from "@/Helpers/colors";
+
 
 export default function Home() {
-  const images = [Img1, Img2, Img3, Img4];
+  const images = [Img1.src, Img2.src, Img3.src, Img4.src];
+
+
 
   return (
-    <div style={{ backgroundColor: colors. secondary, color: colors.foreground }} className="min-h-screen rounded-2xl text-foreground flex flex-col items-center px-8 py-12 gap-12 transition-colors duration-500">
+    <div className="min-h-screen rounded-2xl flex flex-col items-center px-8 py-12 gap-12 transition-colors duration-500 bg-secondary text-foreground">
 
       {/* Hero Section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl w-full items-center">
@@ -26,7 +28,7 @@ export default function Home() {
             <ShoppingCartIcon className="w-12 h-12 text-purple-600 animate-bounce" />
           </h1>
 
-          <p style={{ color: colors.foreground }} className="text-gray-700 dark:text-gray-300 text-lg md:text-xl max-w-xl animate-fadeInUp">
+          <p className="text-gray-700 dark:text-gray-300 text-lg md:text-xl max-w-xl animate-fadeInUp">
             Discover amazing products with the best prices and fast delivery.
           </p>
 
@@ -38,7 +40,6 @@ export default function Home() {
               Shop Now
             </Link>
             <Link
-            style={{ backgroundColor: colors. secondary, color: colors.foreground }}
               href="/categories"
               className="px-8 py-3 bg-white dark:bg-gray-700 text-purple-600 dark:text-purple-400 rounded-xl font-semibold shadow-md hover:scale-105 hover:shadow-lg transition-transform duration-300 border border-purple-200 dark:border-gray-600 text-center"
             >
@@ -50,7 +51,7 @@ export default function Home() {
         {/* Right Slider */}
         <div className="md:col-span-1 flex justify-center items-center">
           <div className="w-full max-w-md rounded-2xl shadow-xl overflow-hidden animate-fadeInUp bg-card dark:bg-gray-800 text-card-foreground dark:text-gray-100">
-            <ProductSlider images={images} />
+            <ProductSlider images={images} altContent={""} />
           </div>
         </div>
       </div>

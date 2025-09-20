@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        token: token,
+        token: token+'',
       },
       body: JSON.stringify({ productId }),
     });

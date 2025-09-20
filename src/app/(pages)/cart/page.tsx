@@ -89,11 +89,11 @@ export default function Cart() {
     city: string,
     phone: string
   ) {
-    const shippingAddress = { details, city, phone };
 
 
 
-    const data = await checkoutAction();
+
+    const data = await checkoutAction(cartId, details, city, phone);
     console.log(data);
   }
 

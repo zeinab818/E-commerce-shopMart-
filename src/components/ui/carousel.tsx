@@ -49,7 +49,7 @@ function Carousel({
   plugins,
   className,
   children,
-  ...props,
+  ...props
 }: React.ComponentProps<"div"> & CarouselProps) {
   const [carouselRef, api] = useEmblaCarousel(
     {

@@ -19,7 +19,7 @@ export default function Brands() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("http://localhost:3000/api/get-brands", {
+      const response = await fetch("/api/get-brands", {
         cache: "no-store",
       });
 
@@ -27,6 +27,7 @@ export default function Brands() {
 
       const { brands }: { brands: BrandI[] } = await response.json();
       setBrands(brands);
+    
     } catch (err) {
       setError("Failed to load brands 😢");
       setBrands(null);

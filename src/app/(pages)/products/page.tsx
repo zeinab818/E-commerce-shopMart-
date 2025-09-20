@@ -25,12 +25,13 @@ export default function Products() {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('http://localhost:3000/api/get-products', {
+      const response = await fetch('/api/get-products', {
         cache: "no-store",
       });
       if (!response.ok) throw new Error("Failed to fetch products");
       const data = await response.json();
       setProducts(data.products);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setError("Failed to load products. Please check your connection.");
     } finally {

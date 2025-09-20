@@ -18,7 +18,7 @@ export default function Categories() {
       setLoading(true);
       setError(null);
 
-      const response = await fetch("http://localhost:3000/api/get-categories", {
+      const response = await fetch("api/get-categories", {
         cache: "no-store",
       });
 
@@ -26,7 +26,7 @@ export default function Categories() {
 
       const { data }: { data: CategoryI[] } = await response.json();
       setCategories(data);
-    } catch (err) {
+    } catch (err:unknown) {
       setError("Failed to load categories 😢");
       setCategories(null);
     } finally {

@@ -50,6 +50,7 @@ export default function RegisterForm() {
       } else {
         setApiError(response.message || "Something went wrong");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setApiError("Server error occurred");
     } finally {

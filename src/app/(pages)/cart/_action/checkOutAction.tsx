@@ -10,7 +10,7 @@ export async function checkoutActionAction(cartId: string, ) {
       {
         method: "POST",
         headers: {
-          token:token,
+          token:token+'',
           "content-type": "application/json",
         },
       }

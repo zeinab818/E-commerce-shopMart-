@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ForgetPasswordSchema } from "@/components/schema/ForgetPasswordSchema";
 import { forgetPasswordAction } from "../_action/forgetPasswordAction";
-import { Link } from "lucide-react";
+
 import { useSession } from "next-auth/react";
 import { colors } from "@/Helpers/colors";
 
@@ -50,6 +50,7 @@ export default function ForgetPasswordForm() {
       } else {
         setApiError(response.statusMsg || "Something went wrong");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setApiError("Server error occurred");
     } finally {

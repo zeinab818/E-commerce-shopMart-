@@ -8,7 +8,7 @@ export async function removeCartItemAllAction() {
    const response = await fetch("https://ecommerce.routemisr.com/api/v1/cart", {
       method: "DELETE",
       headers: {
-        token:token,
+        token:token+'',
       },
     });
     const data: CartResponse = await response.json();

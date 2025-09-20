@@ -11,7 +11,7 @@ export async function removewishlistItemAction(productId: string) {
       {
         method: "DELETE",
         headers: {
-          token:token,
+          token:token+'',
             
         },
       }

@@ -8,8 +8,9 @@ export interface FaildLoginResponse{
     statusMsg:string
 }
 
-export interface UserResponse{
-    name:string,
-    email:string,
-    password:string
+export interface UserResponse {
+  id: string;
+  name: string;
+  email: string;
+  apiToken?: string; // ضيفي السطر ده
 }

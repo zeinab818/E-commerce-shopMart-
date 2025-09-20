@@ -17,7 +17,7 @@ export async function checkoutAction(
       {
         method: "POST",
         headers: {
-          token:  token, 
+          token:  token+'', 
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ shippingAddress }),

@@ -18,7 +18,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { updateDataAction } from "../_action/registerAction";
-import Link from "next/link";
 import { updateDataSchema } from "@/components/schema/UserDataSchema";
 import { colors } from "@/Helpers/colors";
 
@@ -45,21 +44,26 @@ export default function UpdateDataForm() {
     setApiError(null);
     setSuccessMessage(null);
 
-    try {
-      const response = await updateDataAction(values);
+   try {
+  const response = await updateDataAction(values);
 
-      if (
-        response.message &&
-        response.message.toLowerCase().includes("success")
-      ) {
-        setSuccessMessage(response.message);
-        setTimeout(() => router.push("/"), 1500);
-      } else {
-        setApiError(response.message || "Something went wrong");
-      }
-    } catch (error) {
-      setApiError("Server error occurred");
-    } finally {
+  // ✅ لو فيه نجاح
+  if (response.message && response.message.toLowerCase().includes("success")) {
+    setSuccessMessage(response.message);
+    setTimeout(() => router.push("/"), 1500);
+  } 
+  // ❌ لو فيه error object
+  else if (response.errors && response.errors.msg) {
+    setApiError(response.errors.msg); // هتعرض الرسالة الواضحة زي "E-mail already in use"
+  } 
+  // ❌ fallback error
+  else {
+    setApiError(response.message || "Something went wrong");
+  }
+} catch (error) {
+  setApiError("Server error occurred");
+}
+ finally {
       setLoading(false);
     }
 
@@ -163,21 +167,11 @@ export default function UpdateDataForm() {
                 className="w-full bg-purple-400 hover:bg-purple-500 text-white rounded-2xl shadow-lg"
                 disabled={loading}
               >
-                {loading ? "Registering..." : "Register"}
+                {loading ? "Updating..." : "Update"}
               </Button>
             </motion.div>
           </form>
         </Form>
-
-        <p className="mt-6 text-center text-gray-500">
-          Already have an account?{" "}
-          <Link
-            href={"/login"}
-            className="text-cyan-500 font-medium hover:underline"
-          >
-            Login
-          </Link>
-        </p>
       </div>
     </motion.div>
   );

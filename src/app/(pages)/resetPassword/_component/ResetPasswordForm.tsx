@@ -47,6 +47,7 @@ async function onSubmit(values: FormFieldType) {
         } else {
       setApiError(response.message || "Reset code not verified.");
     }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     setApiError("Server error occurred");
   } finally {

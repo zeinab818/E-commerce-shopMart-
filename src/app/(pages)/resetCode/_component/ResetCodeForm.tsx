@@ -46,6 +46,7 @@ export default function ResetCodeForm() {
   
         setApiError(response.message || "Reset code is invalid or has expired");
       }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setApiError("Server error occurred");
     } finally {

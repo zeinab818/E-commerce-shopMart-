@@ -19,22 +19,19 @@ export const WishlistContext = createContext<{
   getWishlist() {},
 });
 
-export default function WishlistContextProvider({
-  children,
-}: {
-  children: ReactNode;
-}) {
+export default function WishlistContextProvider({children,}: {children: ReactNode;}) {
   const [wishlistData, setWishlistData] = useState<WishlistResponse | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const session=useSession();
   const route=useRouter();
 
+
   async function getWishlist() {
     if(session.status=='authenticated'){
-         try {
-      setIsLoading(true);
-      const response = await fetch(
-        "http://localhost:3000/api/get-wishlist",
+      try {
+        setIsLoading(true);
+        const response = await fetch(
+          "/api/get-wishlist",
       );
       const data: WishlistResponse = await response.json();
       setWishlistData(data);

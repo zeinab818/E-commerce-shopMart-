@@ -11,7 +11,7 @@ export async function removeAddressAction(id: string) {
       {
         method: "DELETE",
         headers: {
-          token: token,
+          token: token+'',
           "Content-Type": "application/json",
         },
       }

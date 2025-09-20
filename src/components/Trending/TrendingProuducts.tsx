@@ -20,7 +20,7 @@ import Loading from "@/app/loading";
         const fetchProducts = async () => {
         const res = await fetch("https://ecommerce.routemisr.com/api/v1/products");
         const { data } = await res.json();
-        const topTrending = data.sort((a, b) => b.sold - a.sold).slice(0, 20);
+        const topTrending = data.sort((a: { sold: number; }, b: { sold: number; }) => b.sold - a.sold).slice(0, 20);
         setProducts(topTrending);
         setLoading(false);
         };

@@ -11,7 +11,7 @@ export async function updateCartItemAction(productId: string, count: number) {
         method: "PUT",
         body: JSON.stringify({ count }),
         headers: {
-          token:token,
+          token:token+'',
           "content-type": "application/json",
         },
       }

@@ -47,13 +47,18 @@ export default function BrandDetails({ params }: { params: { brandId: string } }
       if (!productsRes.ok) throw new Error("Failed to fetch products");
       const { data: productsData }: { data: ProductI[] } = await productsRes.json();
       setProducts(productsData);
-    } catch (err) {
-      setError(err.message || "Something went wrong 😢");
-      setBrand(null);
-      setProducts(null);
-    } finally {
-      setLoading(false);
-    }
+   } catch (err: unknown) {
+  if (err instanceof Error) {
+    setError(err.message);
+  } else {
+    setError("Something went wrong 😢");
+  }
+  setBrand(null);
+  setProducts(null);
+}finally{
+  setLoading(false)
+}
+
   }
 
   useEffect(() => {
@@ -102,7 +107,7 @@ export default function BrandDetails({ params }: { params: { brandId: string } }
           </p>
         )}
 
-        {products.map((product, idx) => (
+        {products.map((product) => (
           <Card
           key={product.id}
           className="w-full rounded-2xl overflow-hidden shadow-md transition-transform duration-300 hover:-translate-y-2 hover:shadow-2xl animate__animated animate__fadeInUp bg-[var(--card)] text-[var(--card-foreground)] ]"

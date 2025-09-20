@@ -32,7 +32,7 @@ export default function CartContextProvider({children}:{children:ReactNode}) {
 
     async function getCart() {
         if(session.status=='authenticated'){
-            const response = await fetch('http://localhost:3000/api/get-cart', {
+            const response = await fetch('/api/get-cart', {
         })
         const data : CartResponse = await response.json();
         setIsLoading(false)
@@ -50,6 +50,7 @@ export default function CartContextProvider({children}:{children:ReactNode}) {
     }
 
     
+
 
     useEffect(() => {
     if (session.status === "authenticated") {
