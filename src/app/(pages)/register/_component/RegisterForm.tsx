@@ -47,12 +47,11 @@ export default function RegisterForm() {
         console.log("Server Response:", response);
       if (response.status === "success") {
         setSuccessMessage(response.message);
-        route.push('/login')
+        route.push('/login?register')
         
       } else {
         setApiError(response.message || "Something went wrong");
       }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setApiError("Server error occurred");
     } finally {

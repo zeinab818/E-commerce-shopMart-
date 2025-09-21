@@ -24,7 +24,7 @@ type FormField = z.infer<typeof LoginSchema>;
 
 export function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callback-url");
+  const callbackUrl = searchParams.get("callbackUrl");
   console.log(callbackUrl);
 
   const form = useForm<FormField>({

@@ -19,7 +19,7 @@ export default function middleware(req: NextRequest) {
   }
 
   if (authPages.includes(req.nextUrl.pathname)) {
-    if (!token) {
+    if (!token || req.nextUrl.pathname === '/register') {
       return NextResponse.next();
     } else {
       const redirectURL = new URL("/", req.nextUrl.origin);
