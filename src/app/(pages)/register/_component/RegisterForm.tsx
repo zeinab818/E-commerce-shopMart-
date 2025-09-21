@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -14,11 +14,12 @@ import { registerAction } from "../_action/registerAction";
 import { registerSchema } from "../../../../components/schema/RegisterSchema";
 import Link from "next/link";
 import { colors } from "@/Helpers/colors";
+import { signIn } from "next-auth/react";
 
 type FormFieldType = z.infer<typeof registerSchema>;
 
 export default function RegisterForm() {
-  const router = useRouter();
+
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -46,7 +47,12 @@ export default function RegisterForm() {
         console.log("Server Response:", response);
       if (response.status === "success") {
         setSuccessMessage(response.message);
-       router.push("/login");
+        await signIn("credentials", {
+          redirect: true,
+          email: values.email,
+          password: values.password,
+          callbackUrl: "/profile", // أو أي صفحة dashboard/profile
+        });
       } else {
         setApiError(response.message || "Something went wrong");
       }

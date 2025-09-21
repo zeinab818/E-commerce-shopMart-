@@ -24,8 +24,8 @@ type FormField = z.infer<typeof LoginSchema>;
 
 export function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackURl=searchParams.get('callback-url')
-  console.log(callbackURl);
+  const callbackUrl=searchParams.get('callbackUrl')
+  console.log(callbackUrl);
   
 
   
@@ -40,7 +40,7 @@ export function LoginForm() {
 
   async function onSubmit(values: FormField) {
     await signIn("credentials", {
-      callbackUrl: callbackURl ?? "/",
+      callbackUrl: callbackUrl ?? "/",
       redirect: true,
       email: values.email,
       password: values.password,
