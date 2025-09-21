@@ -24,11 +24,8 @@ type FormField = z.infer<typeof LoginSchema>;
 
 export function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl=searchParams.get('callbackUrl')
+  const callbackUrl = searchParams.get("callbackUrl");
   console.log(callbackUrl);
-  
-
-  
 
   const form = useForm<FormField>({
     resolver: zodResolver(LoginSchema),
@@ -54,8 +51,14 @@ export function LoginForm() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full max-w-md mx-auto min-h-screen flex items-center justify-center px-4"
     >
-      <div  style={{background:colors.secondary, color:colors.accent}}className="rounded-3xl shadow-2xl bg-white dark:bg-gray-900 p-8 w-full">
-        <h2 style={{ color:colors.accentForeground}} className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100">
+      <div
+        style={{ background: colors.secondary, color: colors.accent }}
+        className="rounded-3xl shadow-2xl bg-white dark:bg-gray-900 p-8 w-full"
+      >
+        <h2
+          style={{ color: colors.accentForeground }}
+          className="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-100"
+        >
           Login
         </h2>
 
@@ -68,13 +71,17 @@ export function LoginForm() {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
-
             {/* Email */}
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem style={{background:colors.secondary, color:colors.accentForeground}}>
+                <FormItem
+                  style={{
+                    background: colors.secondary,
+                    color: colors.accentForeground,
+                  }}
+                >
                   <FormLabel>Email</FormLabel>
                   <FormControl>
                     <Input
@@ -91,12 +98,16 @@ export function LoginForm() {
 
             {/* Password */}
             <FormField
-
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem style={{background:colors.secondary, color:colors.accentForeground}}>
-                  <FormLabel >Password</FormLabel>
+                <FormItem
+                  style={{
+                    background: colors.secondary,
+                    color: colors.accentForeground,
+                  }}
+                >
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
@@ -126,13 +137,19 @@ export function LoginForm() {
         <div className="mt-6 text-center space-y-2 text-gray-500">
           <p>
             Don&apos;t have an account?{" "}
-            <a href="/register" className="text-cyan-500 font-medium hover:underline">
+            <a
+              href="/register"
+              className="text-cyan-500 font-medium hover:underline"
+            >
               Register
             </a>
           </p>
           <p>
             Forgot your password?{" "}
-            <Link href={"/forgetPassword"} className="text-cyan-500 font-medium hover:underline">
+            <Link
+              href={"/forgetPassword"}
+              className="text-cyan-500 font-medium hover:underline"
+            >
               Reset
             </Link>
           </p>

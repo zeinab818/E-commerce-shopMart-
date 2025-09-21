@@ -48,7 +48,6 @@ export const authOptions:AuthOptions={
         },
         session:({session,token})=>{
             session.user=token.user  as UserResponse;
-            session.token = token.token as string;
             return session;
         },
 
