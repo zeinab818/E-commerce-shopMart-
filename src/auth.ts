@@ -37,21 +37,22 @@ export const authOptions:AuthOptions={
         })
 
     ],
-    callbacks:{
-        jwt:({token,user})=>{
-            if(user){
-                token.user=user.user;
-                token.token=user.token;
-                
+        callbacks: {
+        async jwt({ token, user }) {
+            if (user) {
+            token.user = user.user;
+            token.token = user.token;
             }
             return token;
         },
-        session:({session,token})=>{
-            session.user=token.user  as UserResponse;
+        async session({ session, token }) {
+            if (token?.user) {
+            session.user = token.user as UserResponse;
+            }
             return session;
         },
+},
 
-    }, 
 
     pages:{
         signIn:'/login',
