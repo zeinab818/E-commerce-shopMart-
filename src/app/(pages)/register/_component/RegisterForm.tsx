@@ -45,9 +45,12 @@ export default function RegisterForm() {
       const response = await registerAction(values);
 
         console.log("Server Response:", response);
-      if (response.status === "success") {
+      if (response.message === "success") {
         setSuccessMessage(response.message);
-        route.push('/login?register')
+        setTimeout(() => {
+          route.replace('/login');
+        }, 1500);
+
         
       } else {
         setApiError(response.message || "Something went wrong");
@@ -57,8 +60,6 @@ export default function RegisterForm() {
     } finally {
       setLoading(false);
     }
-
-    console.log(values);
   }
 
   return (
@@ -75,7 +76,7 @@ export default function RegisterForm() {
 
         {/* Success Message */}
         {successMessage && (
-          <div className="bg-green-100 text-green-700 p-3 rounded-lg mb-4 text-center font-medium">
+          <div className="!bg-green-100 !text-green-700 p-3 rounded-lg mb-4 text-center font-medium">
             {successMessage}
           </div>
         )}
@@ -99,7 +100,6 @@ export default function RegisterForm() {
 
             {/* Name */}
             <FormField
-           
               control={form.control}
               name="name"
               render={({ field }) => (

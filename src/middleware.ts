@@ -4,9 +4,7 @@ const protectedPages = ['/cart', '/wishlist', '/address', '/allorders'];
 const authPages = ['/login', '/register'];
 
 export default function middleware(req: NextRequest) {
-  const token =
-    req.cookies.get("next-auth.session-token")?.value ||
-    req.cookies.get("__Secure-next-auth.session-token")?.value;
+  const token =({req})
 
   if (protectedPages.includes(req.nextUrl.pathname)) {
     if (token) {
