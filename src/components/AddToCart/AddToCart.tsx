@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client";
 import React, { useContext, useState } from "react";
 import { CardFooter } from "../ui/card";
@@ -118,7 +118,7 @@ export default function AddToCart({ productId }: { productId: string }) {
      <Button
         onClick={() => addToCart(productId)}  // 
         disabled={isLoadingCart}
-        className={`w-[80%] text-xl flex gap-2 items-center justify-center text-white py-2 rounded-xl transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-500 to-pink-500`}
+        className={`w-[80%] text-xl cursor-pointer flex gap-2 items-center justify-center text-white py-2 rounded-xl transition-all duration-300 hover:scale-105 bg-gradient-to-r from-purple-500 to-pink-500`}
       >
         {isLoadingCart ? (
           <Loader2 className="animate-spin w-5 h-5" />
