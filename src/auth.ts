@@ -26,6 +26,7 @@ export const authOptions:AuthOptions={
                 if('token' in payload){
                     return {
                         id:payload.user.email,
+                        email: payload.user.email,
                         user:payload.user,
                         token:payload.token,
                     
@@ -37,21 +38,21 @@ export const authOptions:AuthOptions={
         })
 
     ],
-        callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-            token.user = user.user;
-            token.token = user.token;
-            }
-            return token;
-        },
-        async session({ session, token }) {
-            if (token?.user) {
-            session.user = token.user as UserResponse;
-            }
-            return session;
-        },
+callbacks: {
+  async jwt({ token, user }) {
+    if (user) {
+      token.user = user.user ;
+      token.token = user.token;
+    }
+    return token;
+  },
+  async session({ session, token }) {
+    session.user = token.user as UserResponse;
+    session.token = token.token as string;
+    return session;
+  },
 },
+
 
 
     pages:{
