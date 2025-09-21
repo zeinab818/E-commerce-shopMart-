@@ -9,8 +9,7 @@ export interface FaildLoginResponse{
 }
 
 export interface UserResponse {
-  id: string;
   name: string;
   email: string;
-  apiToken?: string; // ضيفي السطر ده
+  role:string
 }

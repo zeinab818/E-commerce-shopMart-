@@ -38,28 +38,22 @@ export const authOptions:AuthOptions={
         })
 
     ],
-callbacks: {
-  async jwt({ token, user }) {
-    if (user) {
-      token.user = user.user ;
-      token.token = user.token;
-    }
-    return token;
-  },
-  async session({ session, token }) {
-    session.user = token.user as UserResponse;
-    session.token = token.token as string;
-    return session;
-  },
-},
-
-
-
+    callbacks: {
+        jwt:({ token, user })=> {
+            if (user) {
+            token.user = user.user ;
+            token.token = user.token;
+            }
+            return token;
+        },
+        session:({ session, token })=> {
+            session.user = token.user as UserResponse;
+            return session;
+        },
+    },
     pages:{
         signIn:'/login',
         error:'/login'
     },
     secret:process.env.NEXTAUTH_SECRET
-
-
 }
