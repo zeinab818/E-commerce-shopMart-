@@ -6,13 +6,16 @@ const protectedPages = ['/cart', '/wishlist', '/address', '/allorders'];
 const authPages = ['/login', '/register'];
 
 export default async function middleware(req: NextRequest) {
-  const token = await getToken({req})
+  const token = await getToken({
+  req,
+  secret: process.env.NEXTAUTH_SECRET
+});
 
   if (protectedPages.includes(req.nextUrl.pathname)) {
     if (token) {
       return NextResponse.next();
     } else {
-      const redirectURL = new URL("/login", req.nextUrl.origin);
+      const redirectURL = new URL("/login", process.env.NEXTAUTH_URL);
       redirectURL.searchParams.set("callbackUrl", req.nextUrl.pathname);
       return NextResponse.redirect(redirectURL);
     }
@@ -22,7 +25,7 @@ export default async function middleware(req: NextRequest) {
     if (!token ) {
       return NextResponse.next();
     } else {
-      const redirectURL = new URL("/", req.nextUrl.origin);
+      const redirectURL = new URL("/", process.env.NEXTAUTH_URL);
       return NextResponse.redirect(redirectURL);
     }
   }
