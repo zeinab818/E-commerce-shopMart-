@@ -137,12 +137,12 @@ export function LoginForm() {
         <div className="mt-6 text-center space-y-2 text-gray-500">
           <p>
             Don&apos;t have an account?{" "}
-            <a
-              href="/register"
+            <Link
+            href={"/register"}
               className="text-cyan-500 font-medium hover:underline"
             >
               Register
-            </a>
+            </Link>
           </p>
           <p>
             Forgot your password?{" "}
