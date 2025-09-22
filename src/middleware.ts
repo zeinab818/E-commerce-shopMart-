@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { getToken } from "next-auth/jwt";
+
 const protectedPages = ['/cart', '/wishlist', '/address', '/allorders'];
 const authPages = ['/login', '/register'];
 
-export default function middleware(req: NextRequest) {
-  const token =({req})
+export default async function middleware(req: NextRequest) {
+  const token = await getToken({req})
 
   if (protectedPages.includes(req.nextUrl.pathname)) {
     if (token) {
@@ -17,7 +19,7 @@ export default function middleware(req: NextRequest) {
   }
 
   if (authPages.includes(req.nextUrl.pathname)) {
-    if (!token || req.nextUrl.pathname === '/register') {
+    if (!token ) {
       return NextResponse.next();
     } else {
       const redirectURL = new URL("/", req.nextUrl.origin);

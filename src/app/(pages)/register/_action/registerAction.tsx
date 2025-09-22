@@ -17,7 +17,7 @@ export async function registerAction(newAccount: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newAccount),
-          cache: "no-store",
+        
 
       }
     );
