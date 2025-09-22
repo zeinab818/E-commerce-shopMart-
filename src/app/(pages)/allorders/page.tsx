@@ -147,7 +147,7 @@ export default function AllOrders() {
       {!isLoading && !error && sortedOrders.length > 0 && (
         <div className="space-y-8 mt-4" style={{background:colors.secondary , color:colors.accentForeground}}>
           {sortedOrders.map((order) => (
-            <div key={order.id} className="border p-4 rounded-xl shadow-md bg-white">
+            <div style={{background:colors.secondary , color:colors.accentForeground}} key={order.id} className="border p-4 rounded-xl shadow-md bg-white">
               <h2 className="font-semibold text-lg mb-2">Order ID: {order.id}</h2>
               <p className="text-sm mb-2" style={{ color: colors.accentForeground }}>
                 <b>Date:</b> {new Date(order.createdAt).toLocaleDateString("en-GB")}

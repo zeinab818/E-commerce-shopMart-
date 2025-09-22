@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -16,12 +16,12 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { checkoutAction } from "./_action/checkoutAction";
 import { cashAction } from "./_action/cashAction";
+import { CartContext } from "../Context/CartContext";
 
 export default function Checkout({ cartId }: { cartId: string }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isLoadingVisa, setIsLoadingVisa] = useState(false);
-  const [isLoadingCash, setIsLoadingCash] = useState(false);
-
+  const [isLoadingCash, setIsLoadingCash] = useState(false);  
   const detailsInput = useRef<HTMLInputElement | null>(null);
   const cityInput = useRef<HTMLInputElement | null>(null);
   const phoneInput = useRef<HTMLInputElement | null>(null);
@@ -34,6 +34,8 @@ export default function Checkout({ cartId }: { cartId: string }) {
 
       if (data.status === "success") {
         location.href = data.session.url;
+
+
       } else {
         toast.error(data.message || "Failed to create Visa payment");
       }
