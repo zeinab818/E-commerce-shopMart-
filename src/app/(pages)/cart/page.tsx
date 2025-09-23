@@ -195,7 +195,7 @@ export default function Cart() {
                     </span>
                     <Button
                       className="cursor-pointer"
-                      disabled={product.count == 20}
+                      disabled={product.count >= Math.floor(product.product.quantity / 4)}
                       onClick={() =>
                         updateCartItemCount(product.product._id, product.count + 1)
                       }
