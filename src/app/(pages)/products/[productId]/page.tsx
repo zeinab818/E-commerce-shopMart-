@@ -18,10 +18,11 @@ import {
 } from "@/components/ui/carousel";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { RepeatIcon, StarIcon, WifiOff } from "lucide-react";
+import { RepeatIcon, StarIcon, WifiOff, X } from "lucide-react";
 import Image from "next/image";
 import ProductSlider from "@/components/carosusel/carousel";
 import AddToCart from "@/components/AddToCart/AddToCart";
@@ -176,7 +177,13 @@ export default function ProductDetails({ params }: { params: { productId: string
                     style={{ background: colors.secondary, color: colors.accent }}
                     className="max-w-3xl p-6 flex flex-col items-center"
                   >
-                    <Carousel
+                      <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none">
+                          <X
+                            className="h-6 w-6 text-gray-950"
+                            style={{ color: colors.accentForeground }} 
+                          />
+                        </DialogClose>
+                                          <Carousel
                       opts={{ loop: true }}
                       setApi={(api) => {
                         api?.on("select", () => {
