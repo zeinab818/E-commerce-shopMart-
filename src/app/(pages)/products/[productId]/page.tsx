@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ProductI } from "@/interface/products";
 import {
   Card,
@@ -35,7 +35,8 @@ export default function ProductDetails({ params }: { params: { productId: string
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
-  async function fetchProductDetails() {
+  // ✅ useCallback عشان ESLint
+  const fetchProductDetails = useCallback(async (): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
@@ -58,11 +59,11 @@ export default function ProductDetails({ params }: { params: { productId: string
     } finally {
       setLoading(false);
     }
-  }
+  }, [productId]);
 
   useEffect(() => {
     fetchProductDetails();
-  }, [productId]);
+  }, [fetchProductDetails]);
 
   if (loading) return <Loading />;
 
@@ -175,15 +176,18 @@ export default function ProductDetails({ params }: { params: { productId: string
                     style={{ background: colors.secondary, color: colors.accent }}
                     className="max-w-3xl p-6 flex flex-col items-center"
                   >
-                    <Carousel opts={{ loop: true }} setApi={(api) => {
-                      api.on("select", () => {
-                        const currentIndex = api.selectedScrollSnap();
-                        const counter = document.getElementById("img-counter");
-                        if (counter) {
-                          counter.innerText = `${currentIndex + 1} / ${product.images.length}`;
-                        }
-                      });
-                    }}>
+                    <Carousel
+                      opts={{ loop: true }}
+                      setApi={(api) => {
+                        api?.on("select", () => {
+                          const currentIndex = api?.selectedScrollSnap() ?? 0;
+                          const counter = document.getElementById("img-counter");
+                          if (counter) {
+                            counter.innerText = `${currentIndex + 1} / ${product.images.length}`;
+                          }
+                        });
+                      }}
+                    >
                       {/* Counter */}
                       <p id="img-counter" className="mb-4 text-sm text-gray-300">
                         1 / {product.images.length}
