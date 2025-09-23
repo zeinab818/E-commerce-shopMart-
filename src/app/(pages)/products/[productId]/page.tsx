@@ -13,6 +13,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
   Dialog,
@@ -33,34 +35,30 @@ export default function ProductDetails({ params }: { params: { productId: string
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
- 
+  async function fetchProductDetails() {
+    try {
+      setLoading(true);
+      setError(null);
 
-async function fetchProductDetails() {
-  try {
-    setLoading(true);
-    setError(null);
+      const response = await fetch(
+        `/api/get-productID?productId=${productId}`,
+        { cache: "no-store" }
+      );
 
-    const response = await fetch(
-      `/api/get-productID?productId=${productId}`,
-      { cache: "no-store" }
-    );
+      if (!response.ok) throw new Error("Failed to fetch product details");
 
-    if (!response.ok) throw new Error("Failed to fetch product details");
-
-    const { data }: { data: ProductI } = await response.json();
-    setProduct(data);
-
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      setError(err.message);
-    } else {
-      setError("Something went wrong 😢");
+      const { data }: { data: ProductI } = await response.json();
+      setProduct(data);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Something went wrong 😢");
+      }
+    } finally {
+      setLoading(false);
     }
-  } finally {
-    setLoading(false); // <<< هنا 👈
   }
-}
-
 
   useEffect(() => {
     fetchProductDetails();
@@ -157,9 +155,13 @@ async function fetchProductDetails() {
         <Carousel opts={{ loop: true }}>
           <CarouselContent className="gap-2 flex justify-center items-center">
             {product.images.map((img, index) => (
-              <CarouselItem key={index} className="basis-auto" style={{background:colors.secondary, color:colors.accent}}>
-                <Dialog >
-                  <DialogTrigger asChild style={{background:colors.secondary, color:colors.accent}}>
+              <CarouselItem
+                key={index}
+                className="basis-auto"
+                style={{ background: colors.secondary, color: colors.accent }}
+              >
+                <Dialog>
+                  <DialogTrigger asChild>
                     <Image
                       className="rounded-xl shadow-md w-[300px] h-[300px] object-cover cursor-pointer"
                       src={img}
@@ -168,14 +170,42 @@ async function fetchProductDetails() {
                       height={300}
                     />
                   </DialogTrigger>
-                  <DialogContent style={{background:colors.secondary, color:colors.accent}} className="max-w-4xl p-0">
-                    <Image
-                      className="w-full h-auto rounded-xl object-contain"
-                      src={img}
-                      alt={`${product.title} - ${index + 1}`}
-                      width={800}
-                      height={800}
-                    />
+
+                  <DialogContent
+                    style={{ background: colors.secondary, color: colors.accent }}
+                    className="max-w-3xl p-6 flex flex-col items-center"
+                  >
+                    <Carousel opts={{ loop: true }} setApi={(api) => {
+                      api.on("select", () => {
+                        const currentIndex = api.selectedScrollSnap();
+                        const counter = document.getElementById("img-counter");
+                        if (counter) {
+                          counter.innerText = `${currentIndex + 1} / ${product.images.length}`;
+                        }
+                      });
+                    }}>
+                      {/* Counter */}
+                      <p id="img-counter" className="mb-4 text-sm text-gray-300">
+                        1 / {product.images.length}
+                      </p>
+
+                      <CarouselContent className="flex items-center">
+                        {product.images.map((modalImg, modalIndex) => (
+                          <CarouselItem key={modalIndex} className="flex justify-center">
+                            <Image
+                              className="rounded-xl max-h-[70vh] w-auto object-contain"
+                              src={modalImg}
+                              alt={`${product.title} - ${modalIndex + 1}`}
+                              width={700}
+                              height={700}
+                            />
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </Carousel>
                   </DialogContent>
                 </Dialog>
               </CarouselItem>

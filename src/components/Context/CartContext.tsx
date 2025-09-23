@@ -49,9 +49,6 @@ export default function CartContextProvider({children}:{children:ReactNode}) {
 
     }
 
-    
-
-
     useEffect(() => {
     if (session.status === "authenticated") {
         getCart();

@@ -1,73 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/Helpers/format";
 import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
 
 import { WishlistContext } from "@/components/Context/WishlistContext/WishlistContext";
-import { WishlistResponse } from "@/interface/wishlist";
 import Loading from "@/app/loading";
 import AddToCart from "@/components/AddToCart/AddToCart";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 
 export default function Wishlist() {
-  const { wishlistData, isLoading, setWishlistData } = useContext(WishlistContext);
+  const { wishlistData, isLoading } = useContext(WishlistContext);
   const router = useRouter();
-  const session=useSession();
 
   function backHome() {
     router.push("/");
   }
-
-async function getWishlist() {
-  if (session.status === "authenticated") {
-    try {
-      const response = await fetch("http://localhost:3000/api/get-wishlist");
-      const data: WishlistResponse = await response.json();
-      setWishlistData(data);
-    } catch (err) {
-      console.error("Failed to fetch wishlist", err);
-    }
-  } else {
-    router.push("/login");
-  }
-}
-
-async function removeFromWishlist(productId: string) {
-  if (session.status === "authenticated") {
-    try {
-      await fetch(`http://localhost:3000/wishlist/${productId}`, {
-        method: "DELETE", // تأكدي من استخدام Method صحيحة
-      });
-
-      // تحديث الـ state بدون استخدام الدالة لتجنب مشكلة TypeScript
-      if (wishlistData) {
-        const newWishlistData: WishlistResponse = {
-          ...wishlistData,
-          data: wishlistData.data.filter((item) => item._id !== productId),
-        };
-        setWishlistData(newWishlistData);
-      }
-    } catch (err) {
-      console.error("Failed to remove product", err);
-    }
-  } else {
-    router.push("/login");
-  }
-}
-
-
-    useEffect(() => {
-      if (session.status === "authenticated") {
-          getWishlist();
-      } else if (session.status === "unauthenticated") {
-          router.push("/login");
-      }
-      }, [session.status]);
 
   if (isLoading) return <Loading />;
 
@@ -116,16 +67,6 @@ async function removeFromWishlist(productId: string) {
                 height={200}
                 className="w-full h-80 object-cover hover:opacity-90 transition"
               />
-
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  removeFromWishlist(product._id);
-                }}
-                className="absolute top-2 right-2 p-2 bg-white rounded-full shadow hover:bg-gray-100 transition"
-              >
-                <Heart className="w-6 h-6 text-pink-500 fill-pink-500 hover:text-gray-400 hover:fill-gray-400 transition" />
-              </button>
             </Link>
 
             <div className="p-4 flex flex-col gap-2">
@@ -144,6 +85,7 @@ async function removeFromWishlist(productId: string) {
                 {product?.price ? formatCurrency(product.price) : "No Price"}
               </div>
 
+              {/* زرار Add to Cart فقط */}
               <AddToCart productId={product._id} />
 
               <Link

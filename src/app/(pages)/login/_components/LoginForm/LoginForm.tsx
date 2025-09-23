@@ -19,11 +19,15 @@ import { useSearchParams } from "next/navigation";
 import { LoginSchema } from "@/components/schema/LoginSchema";
 import Link from "next/link";
 import { colors } from "@/Helpers/colors";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 type FormField = z.infer<typeof LoginSchema>;
 
 export function LoginForm() {
   const searchParams = useSearchParams();
+  const [loading, setLoading] = useState(false);
+  
   const callbackUrl = searchParams.get("callbackUrl");
   console.log(callbackUrl);
 
@@ -36,12 +40,18 @@ export function LoginForm() {
   });
 
   async function onSubmit(values: FormField) {
-    await signIn("credentials", {
+    try{
+      setLoading(true);
+       await signIn("credentials", {
       callbackUrl: callbackUrl ?? "/",
       redirect: true,
       email: values.email,
       password: values.password,
     });
+    }
+    finally{
+        setLoading(false);
+    }
   }
 
   return (
@@ -127,7 +137,14 @@ export function LoginForm() {
                 type="submit"
                 className="w-full mt-4 bg-purple-400 hover:bg-purple-500 text-white rounded-2xl shadow-lg py-3 text-lg font-medium"
               >
-                Login
+              {loading ? (
+                    <>
+                      <Loader2 className="animate-spin w-5 h-5" /> Logging...
+                    </>
+                  ) : (
+                    "Login"
+                  )}
+
               </Button>
             </motion.div>
           </form>
