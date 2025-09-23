@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "animate.css";
-
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -126,40 +124,9 @@
   h2 {
     @apply text-xl font-medium;
   }
-
-  /* ✅ Tailwind-like container */
   .container {
-    @apply mx-auto px-4;
-    width: 80%;   /* العرض 90% */
-    max-width: 80%; 
+    @apply mx-auto;
   }
-
-  @screen sm {
-    .container {
-      max-width: 640px;
-    }
-  }
-  @screen md {
-    .container {
-      max-width: 768px;
-    }
-  }
-  @screen lg {
-    .container {
-      max-width: 1024px;
-    }
-  }
-  @screen xl {
-    .container {
-      max-width: 1280px;
-    }
-  }
-  @screen 2xl {
-    .container {
-      max-width: 1536px;
-    }
-  }
-
   .main-color {
     @apply text-purple-600;
   }
@@ -167,21 +134,18 @@
     @apply bg-purple-600;
   }
 }
-
 body {
   padding-top: 150px;
 }
-
-.root {
+.root{
   height: 100vh;
 }
-
 :root {
-  --link-color: #6b21a8; /* لون طبيعي */
-  --link-hover: #9d4edd; /* لون hover */
+  --link-color: #6b21a8;        /* لون طبيعي */
+  --link-hover: #9d4edd;        /* لون لما hover */
 }
 
 .dark {
-  --link-color: #d8b4fe; /* لون طبيعي للدارك */
-  --link-hover: #c084fc; /* لون hover في الداكن */
+  --link-color: #d8b4fe;        /* لون طبيعي للدارك */
+  --link-hover: #c084fc;        /* لون لما hover في الداكن */
 }
