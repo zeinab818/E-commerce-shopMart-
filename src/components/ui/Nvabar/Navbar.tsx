@@ -51,7 +51,7 @@ export default function Navbar({ mode, changeMood }: NavbarProps) {
       className="bg-gradient-to-b from-purple-50 to-pink-50 text-gray-800 py-4 top-0 left-0 right-0 fixed w-full z-40"
     >
       <div className="container mx-auto">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center px-5">
           <h1>
             <Logo />
           </h1>
@@ -263,7 +263,7 @@ export default function Navbar({ mode, changeMood }: NavbarProps) {
         {open && (
           <div
             style={{ background: colors.secondary }}
-            className="md:hidden mt-2 bg-gradient-to-b from-purple-50 to-pink-50 rounded-lg shadow p-4 space-y-4 animate__animated animate__fadeInDown"
+            className="md:hidden  mt-2 bg-gradient-to-b from-purple-50 to-pink-50 rounded-lg shadow p-4 space-y-4 animate__animated animate__fadeInDown"
           >
             {/* Navigation Links */}
             <div className="flex flex-col space-y-2">

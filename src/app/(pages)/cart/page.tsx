@@ -124,13 +124,13 @@ export default function Cart() {
   return (
     <div className="container mx-auto py-6">
       {/* Title */}
-      <h1 className="animate__animated animate__rubberBand text-3xl font-extrabold relative">
+      <h1 className="px-5 animate__animated animate__rubberBand text-3xl font-extrabold relative">
         <span className="relative inline-block bg-gradient-to-r from-purple-600 via-pink-500 to-red-400 text-transparent bg-clip-text">
           Shopping Cart
           <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-16 h-1 bg-gradient-to-r from-purple-600 to-pink-500 rounded-full animate-pulse"></span>
         </span>
       </h1>
-      <p className="text-muted-foreground mt-2">
+      <p className="px-5 text-muted-foreground mt-2">
         {cartData?.numOfCartItems} items in your cart
       </p>
 
