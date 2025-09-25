@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -14,11 +14,12 @@ import { ResetPasswordSchema } from "@/components/schema/ResetPasswordSchema";
 import z from "zod";
 import Link from "next/link";
 import { colors } from "@/Helpers/colors";
+import { signOut } from "next-auth/react";
 
 type FormFieldType = z.infer<typeof ResetPasswordSchema>;
 
 export default function ResetPasswordForm() {
-  const router = useRouter();
+
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
@@ -42,10 +43,8 @@ async function onSubmit(values: FormFieldType) {
 
     if (response.token) {
           setSuccessMessage("Password reset successfully!");
-            document.cookie = "next-auth.session-token=; Max-Age=0; path=/;";
-            document.cookie = "__Secure-next-auth.session-token=; Max-Age=0; path=/;";
           await new Promise(res => setTimeout(res, 1500));
-          router.push("/login");
+              await signOut({ callbackUrl: "/login" });
         } else {
       setApiError(response.message || "Reset code not verified.");
     }

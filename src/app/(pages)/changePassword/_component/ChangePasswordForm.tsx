@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
@@ -14,19 +14,19 @@ import z from "zod";
 import Link from "next/link";
 import { ChangePasswordSchema } from "@/components/schema/ChangePasswordSchema";
 import { changePasswordAction } from "../_action/changePasswordAction";
-import { useSession } from "next-auth/react";
+import { signOut} from "next-auth/react";
 import { colors } from "@/Helpers/colors";
 
 
 type FormFieldType = z.infer<typeof ChangePasswordSchema>;
 
 export default function ChangePasswordForm() {
-  const router = useRouter();
+
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const session=useSession();  
+  
   const form = useForm<FormFieldType>({
     resolver: zodResolver(ChangePasswordSchema),
     defaultValues: { currentPassword: "", password: "",rePassword:"" },
@@ -47,11 +47,9 @@ async function onSubmit(values: FormFieldType) {
 
     if (response) {
           setSuccessMessage("Password changed successfully!");
-            document.cookie = "next-auth.session-token=; Max-Age=0; path=/;";
-            document.cookie = "__Secure-next-auth.session-token=; Max-Age=0; path=/;";
-          session.status='unauthenticated'
+    
           await new Promise(res => setTimeout(res, 1500));
-          router.push("/login");
+          await signOut({ callbackUrl: "/login" });
         } else {
       setApiError(response.message || "Change Password not verified.");
     }
