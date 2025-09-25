@@ -47,6 +47,8 @@ async function onSubmit(values: FormFieldType) {
 
     if (response) {
           setSuccessMessage("Password changed successfully!");
+            document.cookie = "next-auth.session-token=; Max-Age=0; path=/;";
+            document.cookie = "__Secure-next-auth.session-token=; Max-Age=0; path=/;";
           session.status='unauthenticated'
           await new Promise(res => setTimeout(res, 1500));
           router.push("/login");
